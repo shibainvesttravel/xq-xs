@@ -1,0 +1,19 @@
+{@type:filter|@guid:be4543933bdf4ff1b3a50fdaadb7df98}
+// Set to daily K-line
+setbarfreq("D");
+
+// Define input parameters
+input: XLength(120, "Long-term volume calculation period");  // Calculation period (120 days)
+input: Length1(20, "Greater than days");  // Minimum number of days for the highest volume occurrence
+input: Length2(70, "Less than days");  // Maximum number of days for the highest volume occurrence
+
+// Set the required number of bars for backtesting
+settotalbar(XLength);
+
+// Calculate the highest volume and its corresponding bar position within the period
+value1 = FastHighestBar(volume, XLength); // Highest volume K-bar position in the range
+value2 = FastHighest(volume, XLength);    // Highest volume value in the range
+
+// Check if the highest volume bar position is within the specified range
+if value1 <= Length2 and value1 >= Length1 then
+    ret = 1;  // Signal triggered

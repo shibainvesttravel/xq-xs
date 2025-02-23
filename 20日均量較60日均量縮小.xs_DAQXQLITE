@@ -1,0 +1,14 @@
+{@type:filter|@guid:894881424df846d188c259c9773ff374}
+// 設定為日 K 線
+setbarfreq("D");
+
+// 定義輸入參數
+input: Length1(20, "均量區間1");  // 短期均量計算區間（20 天）
+input: Length2(60, "均量區間2");  // 長期均量計算區間（60 天）
+input: VolFactor(2, "縮小");  // 短期均量需小於長期均量的倍數（預設 2 倍）
+
+// 設定回測所需 K 棒數
+SettotalBar(Length2);
+
+// 判斷短期均量是否小於長期均量的指定倍數
+Ret = Average(Volume[1], Length1) < Average(Volume[1], Length2) * VolFactor;

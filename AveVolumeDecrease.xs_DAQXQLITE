@@ -1,0 +1,15 @@
+{@type:filter|@guid:b0bca2c0ce364194bbf3c4927df8b520}
+// Set to daily K-line
+setbarfreq("D");
+
+// Define input parameters
+input: Length1(20, "Short-term average volume period");  // Short-term volume period (20 days)
+input: Length2(60, "Long-term average volume period");  // Long-term volume period (60 days)
+input: VolFactor(2, "Shrink factor");  // Short-term volume must be less than long-term volume by this factor (default 2x)
+
+// Set the required number of bars for backtesting
+SettotalBar(Length2);
+
+// Check if short-term average volume is smaller than long-term average volume by the given multiplier
+Ret = Average(Volume[1], Length1) < Average(Volume[1], Length2) * VolFactor;
+

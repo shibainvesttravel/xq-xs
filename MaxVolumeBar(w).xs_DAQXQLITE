@@ -1,0 +1,19 @@
+{@type:filter|@guid:2bd64c7c0eb645ea9214ccdd95625938}
+// Set to weekly K-line
+setbarfreq("W");
+
+// Define input parameters
+input: XLength(240, "Long-term volume calculation period");  // Calculation period (240 weeks)
+input: Length1(120, "Greater than weeks");  // Minimum number of weeks for the highest volume occurrence
+input: Length2(240, "Less than weeks");  // Maximum number of weeks for the highest volume occurrence
+
+// Set the required number of bars for backtesting
+settotalbar(XLength);
+
+// Calculate the bar number where the highest volume occurs within the period
+value1 = FastHighestBar(volume, XLength); // Highest volume K-bar position in the range
+
+// Check if the highest volume bar position is within the specified range
+if value1 <= Length2 and value1 >= Length1 then
+    ret = 1;  // Signal triggered
+

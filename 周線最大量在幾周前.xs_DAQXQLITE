@@ -1,0 +1,18 @@
+{@type:filter|@guid:118da11b23df4e39b515d7e7d4df32a7}
+// 設定為週 K 線
+setbarfreq("W");
+
+// 定義輸入參數
+input: XLength(240, "長期大量計算期數");  // 計算區間（240 週）
+input: Length1(120, "大於幾周");  // 最大量出現的最小週數限制
+input: Length2(240, "小於幾周");  // 最大量出現的最大週數限制
+
+// 設定回測所需 K 棒數
+settotalbar(XLength);
+
+// 計算區間內的最大成交量所在 K 棒數
+value1 = FastHighestBar(volume, XLength); // 區間內最大量所在週數
+
+// 判斷最大成交量 K 棒數是否落在設定範圍內
+if value1 <= Length2 and value1 >= Length1 then
+    ret = 1;  // 訊號成立
