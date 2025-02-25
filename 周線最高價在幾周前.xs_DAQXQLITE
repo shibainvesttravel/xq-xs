@@ -1,0 +1,16 @@
+{@type:filter|@guid:eb54acbe957d42c0af171cfbcf1490a7}
+setbarfreq("W"); // 設定時間頻率為週 (W)
+
+input:XLength(52,"長期計算期數"); // 設定長期計算的週期數 (例如 52 週)
+input:Length1(10,"大於幾周"); // 設定最小週數限制
+input:Length2(52,"小於幾周"); // 設定最大週數限制
+
+variable: PriceHighBar(0), VolumeHighBar(0); // 定義變數 (但 VolumeHighBar 未在此腳本中使用)
+
+settotalbar(XLength); // 設定總計算範圍
+
+value1 = FastHighestBar(h, XLength); // 在 XLength 期間內，尋找最高價格 (high) 出現的週數索引值
+
+// 如果最高價格的發生週數在 Length1 和 Length2 之間，則返回 1
+if value1 <= Length2 and value1 >= Length1 then
+   ret = 1;

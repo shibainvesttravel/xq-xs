@@ -1,0 +1,25 @@
+{@type:filter|@guid:785545572c634ce9af0a49e64372b295}
+SetBarFreq("W"); // 設定時間頻率為週 (W)
+
+input:Leng1(5,"短均線");  // 設定短期移動平均線的週期數
+input:Leng2(10,"中均線"); // 設定中期移動平均線的週期數
+input:Leng3(20,"長均線"); // 設定長期移動平均線的週期數
+input:percent1(0.005,"間距1"); // 設定短均線與中均線的最小間距 (0.5%)
+input:percent2(0.02,"間距2"); // 設定中均線與長均線的最小間距 (2%)
+
+variable: ma1(0), ma2(0), ma3(0); // 定義變數，存儲移動平均線的值
+
+// 計算短、中、長期移動平均線
+ma1 = average(c, Leng1);
+ma2 = average(c, Leng2);
+ma3 = average(c, Leng3);
+
+// 條件判斷
+if ma1 > ma2 and ma2 > ma3  // 短期均線 > 中期均線 > 長期均線 (多頭排列)
+and ma1 > ma1[1] and ma2 > ma2[1] // 短均線與中均線呈現上升趨勢
+and (ma1 - ma1[1]) < (ma2 - ma2[1]) // 短均線的變化幅度小於中均線的變化幅度 (趨勢放緩)
+
+then ret = 1; // 若符合條件，則返回 1
+
+
+

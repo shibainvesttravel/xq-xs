@@ -1,0 +1,25 @@
+{@type:filter|@guid:ef966a0ea9d24a7cbdbc7c8bf337278f}
+setbarfreq("W"); // 設定時間頻率為週 (W)
+
+input:percent1(0,"漲幅變動大於幾趴"); // 設定漲幅變動的最小百分比
+input:percent2(50,"變動小於幾趴");   // 設定漲幅變動的最大百分比
+input:percent3(0,"跌幅變動大於幾趴"); // 設定跌幅變動的最小百分比
+input:percent4(50,"變動小於幾趴");   // 設定跌幅變動的最大百分比
+input:period(60,"幾周內");            // 設定計算週期
+input:period1(10,"幾周前");           // 設定基準週期
+
+settotalbar(period+1); // 設定總計算範圍
+
+// 定義條件1：股價在 period1 週前高於 period+period1-1 週前，並且變動幅度在指定範圍內
+condition1 = C[period1] >= C[period+period1-1] and absvalue(C[period+period1-1] - C[period1]) >= C[period+period1-1] * (percent1 * 0.01)
+   and absvalue(C[period+period1-1] - C[period1]) <= C[period+period1-1] * (percent2 * 0.01);
+
+// 定義條件2：股價在 period1 週前低於 period+period1-1 週前，並且變動幅度在指定範圍內
+condition2 = C[period1] <= C[period+period1-1] and absvalue(C[period+period1-1] - C[period1]) >= C[period+period1-1] * (percent3 * 0.01)
+   and absvalue(C[period+period1-1] - C[period1]) <= C[period+period1-1] * (percent4 * 0.01);
+
+// 若符合條件1或條件2，則返回 1
+if condition1 or condition2
+then ret=1;
+
+

@@ -1,0 +1,25 @@
+{@type:filter|@guid:587dd074a127455bbe322cf5734e3373}
+SetBarFreq("W"); // Set the time frequency to weekly (W)
+
+input:Leng1(5,"Short-term MA");  // Set the period for the short-term moving average
+input:Leng2(10,"Medium-term MA"); // Set the period for the medium-term moving average
+input:Leng3(20,"Long-term MA"); // Set the period for the long-term moving average
+input:percent1(0.005,"Gap 1"); // Set the minimum gap between short and medium MA (0.5%)
+input:percent2(0.02,"Gap 2"); // Set the minimum gap between medium and long MA (2%)
+
+variable: ma1(0), ma2(0), ma3(0); // Define variables to store moving averages
+
+// Calculate short, medium, and long-term moving averages
+ma1 = average(c, Leng1);
+ma2 = average(c, Leng2);
+ma3 = average(c, Leng3);
+
+// Condition check
+if ma1 > ma2 and ma2 > ma3  // Short MA > Medium MA > Long MA (Bullish alignment)
+and ma1 > ma1[1] and ma2 > ma2[1] // Both short and medium MA are trending upward
+and (ma1 - ma1[1]) < (ma2 - ma2[1]) // Short MA is increasing at a slower rate than medium MA (trend slowdown)
+
+then ret = 1; // If conditions are met, return 1
+
+
+

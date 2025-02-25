@@ -1,0 +1,28 @@
+{@type:filter|@guid:d5e0ad397a8b4179a4a220761fbc2079}
+setbarfreq("W"); // Set the time frequency to weekly (W)
+
+input:percent1(0,"Increase greater than X percent"); // Set the minimum percentage change for price increase
+input:percent2(50,"Change less than X percent");     // Set the maximum percentage change for increase
+input:percent3(0,"Decrease greater than X percent"); // Set the minimum percentage change for price decrease
+input:percent4(50,"Change less than X percent");     // Set the maximum percentage change for decrease
+input:period(60,"Within how many weeks");           // Set the calculation period
+input:period1(10,"How many weeks ago");             // Set the reference period
+
+settotalbar(period+1); // Set the total calculation range
+
+// Define Condition 1: Price was higher at 'period1' weeks ago compared to 'period+period1-1' weeks ago, 
+// and the absolute change falls within the specified range
+condition1 = C[period1] >= C[period+period1-1] and absvalue(C[period+period1-1] - C[period1]) >= C[period+period1-1] * (percent1 * 0.01)
+   and absvalue(C[period+period1-1] - C[period1]) <= C[period+period1-1] * (percent2 * 0.01);
+
+// Define Condition 2: Price was lower at 'period1' weeks ago compared to 'period+period1-1' weeks ago, 
+// and the absolute change falls within the specified range
+condition2 = C[period1] <= C[period+period1-1] and absvalue(C[period+period1-1] - C[period1]) >= C[period+period1-1] * (percent3 * 0.01)
+   and absvalue(C[period+period1-1] - C[period1]) <= C[period+period1-1] * (percent4 * 0.01);
+
+// If either condition 1 or condition 2 is met, return 1
+if condition1 or condition2
+then ret=1;
+
+
+
