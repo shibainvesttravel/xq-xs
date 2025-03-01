@@ -1,0 +1,23 @@
+{@type:filter|@guid:72dbbc044dd24560a41d87dc643a031a}
+SetBarFreq("D");
+
+input: Leng1(5,"短均線");
+input: Leng2(10,"中均線");
+input: Leng3(60,"長均線");
+input: period1(120,"計算範圍");
+input: number1(5,"計算次數");
+
+settotalBar(period1+10); // 確保有足夠歷史資料
+
+variable: ma1(0), ma2(0), ma3(0);
+
+ma1 = average(c,Leng1);
+ma2 = average(c,Leng2);
+ma3 = average(c,Leng3);
+
+condition1 = CrossOver(ma1,ma3); //判斷5期均線和60期均線是否黃金交叉
+
+
+value1 = countif(condition1,period1);     
+if value1>=number1  then ret = 1;
+

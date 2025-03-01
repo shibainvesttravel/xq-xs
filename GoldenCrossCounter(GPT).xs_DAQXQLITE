@@ -1,0 +1,31 @@
+{@type:filter|@guid:240d3cb21f8b4c8f930ba92768a361ab}
+// Set the time frame to daily bars
+SetBarFreq("D");
+
+// Define input parameters
+input: LengShort(5, "Short-term MA");      // 5-day moving average
+input: LengLong(60, "Long-term MA");       // 60-day moving average
+input: Period(120, "Analysis Period");     // Lookback period for counting crossovers (120 days)
+input: MinCross(4, "Minimum Crossovers");  // Minimum number of crossovers required (default = 4)
+
+// Ensure enough historical data is loaded for calculations
+settotalBar(Period + 10);
+
+// Declare variables for moving averages
+variable: maShort(0), maLong(0);
+
+// Calculate short-term and long-term moving averages
+maShort = average(c, LengShort);  // Compute the 5-day moving average
+maLong = average(c, LengLong);    // Compute the 60-day moving average
+
+// Count the number of times the short-term MA crosses over the long-term MA within the defined period
+variable: GoldenCrossCount(0);
+GoldenCrossCount = countif(maShort cross over maLong, Period);
+
+// Check if the number of crossovers meets or exceeds the threshold
+if GoldenCrossCount >= MinCross then 
+    ret = 1;  // Return 1 if crossover count meets the requirement
+
+
+
+
