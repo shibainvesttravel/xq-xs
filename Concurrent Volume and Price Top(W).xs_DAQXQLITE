@@ -1,0 +1,25 @@
+{@type:filter|@guid:0f5430d833074ec3b52453af24ad5bc5}
+setbarfreq("W");  
+
+input:XLength(60,"Long-term volume calculation period");  
+input:XLength1(120,"Long-term high price calculation period");  
+input:Length1(4,"Greater than how many weeks");  
+input:Length2(60,"Less than how many weeks");  
+input:Length3(4,"Greater than how many weeks");  
+input:Length4(120,"Less than how many weeks");  
+
+settotalbar(XLength1);  
+
+
+value1 = FastHighestBar(volume, XLength);  
+value2 = FastHighestBar(high, XLength);  
+value3 = FastHighestBar(volume, XLength1);  
+value4 = FastHighestBar(high, XLength1);  
+
+condition1=value1=value2; 
+condition2=value3=value4;  
+
+if value3>=length3 and value4<=length4  
+  and value3=value4  
+then
+ret = 1; 

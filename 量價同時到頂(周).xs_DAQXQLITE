@@ -1,0 +1,25 @@
+{@type:filter|@guid:2f0a0e9fc6d94cbe8384866bb60dd2fe}
+setbarfreq("W");  // 設定頻率為每週
+
+input:XLength(60,"長期大量計算期數");  
+input:XLength1(120,"長期高價計算期數");  
+input:Length1(4,"大於幾周");  
+input:Length2(60,"小於幾周");  
+input:Length3(4,"大於幾周");  
+input:Length4(120,"小於幾周");  
+
+settotalbar(XLength1);  // 設定計算範圍
+
+value1=FastHighestBar(volume,XLength);  // 計算最大成交量柱號
+value2=FastHighestBar(high,XLength);  // 計算最高價柱號
+value3=FastHighestBar(volume,XLength1);  // 計算長期最大成交量柱號
+value4=FastHighestBar(high,XLength1);  // 計算長期最高價柱號
+
+condition1=value1=value2;  // 判斷短期內成交量與最高價是否發生在相同柱號
+condition2=value3=value4;  // 判斷長期內成交量與最高價是否發生在相同柱號
+
+if value3>=length3 and value4<=length4  
+  and value3=value4  
+
+then
+ret = 1;  // 條件成立時返回 1
