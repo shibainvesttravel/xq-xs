@@ -1,0 +1,11 @@
+{@type:filter|@guid:3f5991079f8e42678ae399d47dc7e27a}
+input:MinCapital(1, "最小股本(億)");
+input:MaxCapital(5000, "最大股本(億)");
+
+
+Value1 = GetField("最新股本");
+
+// 介於兩者之間
+Ret = Value1 >= MinCapital and Value1 <= MaxCapital;
+
+

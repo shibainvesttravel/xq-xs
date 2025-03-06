@@ -1,0 +1,13 @@
+{@type:filter|@guid:20d2833e5a394ca08b998db68f017b56}
+input:Length1(20,"短日");
+input:Length2(40,"長日");
+input:percent(0.2,"percent");
+
+settotalBar(Length2);
+
+value1=average(range1,Length1);
+value2=average(range1,Length2);
+
+if value1<value2*(1+percent)
+then 
+ret=1;

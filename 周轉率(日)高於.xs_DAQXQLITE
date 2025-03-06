@@ -1,0 +1,9 @@
+{@type:filter|@guid:ae4b508a2d244b55b1fd5a12ccf37662}
+setbarfreq("D");
+input:period(1, "幾日周轉率");
+input:rate(5,"幾%");
+value1 = TurnOverRate(period);	//計算幾期的周轉率
+SettotalBar(Period+10);
+
+if value1>= rate
+then ret=1;

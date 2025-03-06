@@ -1,0 +1,6 @@
+{@type:filter|@guid:753751e927c3415caec2339579c7051a}
+input:PriceLimit(10, "最大股價");
+
+
+
+Ret = close < PriceLimit;

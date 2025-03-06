@@ -1,0 +1,13 @@
+{@type:filter|@guid:cdb793bf46384db3a6b21942e7ed006b}
+input: upperlimit(10, "持股上限");
+input: lowerlimit(0, "持股下限");
+
+Value1 = GetField("法人持股比例");
+
+SetTotalBar(10);
+
+
+if value1<=upperlimit and value1>=lowerlimit
+then ret=1;
+
+

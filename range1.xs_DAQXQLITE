@@ -1,0 +1,5 @@
+{@type:function|@guid:3630fb12ee82438abe6630cf0b902b47}
+SetBarMode(1);
+
+Range1 = absvalue(o-c)*100/c[1];
+        
