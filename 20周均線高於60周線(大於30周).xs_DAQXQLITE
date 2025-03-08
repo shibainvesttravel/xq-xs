@@ -1,0 +1,16 @@
+{@type:filter|@guid:379b6ba268714b99bfe6a73a0ed356ce}
+SetBarFreq("W");  // 設定數據頻率為每週
+
+input:Leng1(20,"短周");  // 設定短週期長度為 20
+input:Leng2(60,"中周");  // 設定中週期長度為 60
+input:Period(30,"持續幾周");  // 設定檢測條件需持續的週期數為 30
+
+settotalbar(Period + 10);  // 設定總計算條件的 bar 數量，確保足夠的數據長度
+
+Value1 = average(c, Leng1);  // 計算短週期均線（20 週移動平均）
+Value2 = average(c, Leng2);  // 計算中週期均線（60 週移動平均）
+
+if trueall(Value1 > Value2, Period)  // 檢查短週期均線是否連續 `Period` 週高於中週期均線
+then 
+    ret = 1;  // 若條件成立，則設置返回值為 1
+
