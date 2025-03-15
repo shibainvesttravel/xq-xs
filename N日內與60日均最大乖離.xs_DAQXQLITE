@@ -1,0 +1,26 @@
+{@type:filter|@guid:371c579b1c594a16853c6de23bd4b20e}
+input: Length1(60, "天數");
+input: Length2(60, "幾日均");
+input:Lowerlimit(15,"下限");
+input:Upperlimit(30,"上限");
+
+
+var: MA60(0), DiffHigh(0), DiffLow(0), MaxDiff(0), MaxDiff1(0), MaxDevMA60(0), Result(0);
+
+SettotalBar(length1+length2);
+
+MA60 = Average(Close, Length2);  { 計算 60 日均線 }
+
+DiffHigh = absvalue(High - MA60);  { 當日最高價與 60 日均線的差值 }
+DiffLow = absvalue(MA60 - Low);     { 當日最低價與 60 日均線的差值 }
+
+MaxDiff = MaxList(diffhigh,DiffLow);  
+MaxDiff1 =Maxdiff*100/Ma60;
+
+
+MaxDevMA60 = Highest(Maxdiff1, Length1);  { 計算 60 日均線的 60 日均值 }
+
+if MaxDevMA60 >lowerlimit and MaxDevMA60< upperlimit
+then 
+ret=1;
+

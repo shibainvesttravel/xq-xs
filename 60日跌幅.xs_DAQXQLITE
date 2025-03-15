@@ -1,0 +1,18 @@
+{@type:filter|@guid:f82444f4f3304d51ba416f665402581e}
+setbarfreq("D");  // 設定時間週期為每日 (Day)
+
+// 設定參數，讓使用者可以調整
+input:percent1(0,"跌幅大於幾趴");   // 設定跌幅下限百分比
+input:percent2(5,"跌幅小於幾趴");   // 設定跌幅上限百分比
+input:period(60,"幾日內");           // 設定計算區間 (幾日內的跌幅)
+
+// 設定總資料長度 (確保有足夠的歷史資料可計算)
+settotalbar(period+1);
+
+// 判斷當前收盤價相對於 period 天前的收盤價變動是否符合「跌幅」條件
+if (c - c[period-1]) <= -c[period-1] * (percent1 * 0.01)  // 跌幅大於等於 percent1%
+   and (c - c[period-1]) >= -c[period-1] * (percent2 * 0.01) // 跌幅小於等於 percent2%
+then 
+   ret = 1;  // 設定返回值為 1，表示符合條件
+
+
