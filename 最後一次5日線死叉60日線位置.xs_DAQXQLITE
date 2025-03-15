@@ -1,0 +1,31 @@
+{@type:filter|@guid:7c02b13ddc684535b3351586b7d6a816}
+// 設定時間週期為日線
+SetBarFreq("D");
+
+// 定義輸入參數
+input: LengShort(5, "短期均線");     // 5 日均線
+input: LengLong(60, "長期均線");     // 60 日均線
+input: Period(120, "統計區間");      // 近 120 天內搜尋最後一次交叉
+input: MinDays(15, "最小 K 棒數");   // 交叉 K 棒數需大於等於 MinDays
+input: MaxDays(35, "最大 K 棒數");   // 交叉 K 棒數需小於等於 MaxDays
+
+// 設定所需的歷史數據範圍，確保有足夠的數據進行計算
+settotalBar(Period + LengLong);
+
+// 定義變數來存儲均線數據
+variable: maShort(0), maLong(0);
+
+// 計算短期與長期均線
+maShort = average(c, LengShort);  // 5日均線
+maLong = average(c, LengLong);    // 60日均線
+
+// 找到最後一次 5 日均線死亡交叉 60 日均線的位置
+variable: LastDeathCross(0);
+LastDeathCross = barslast(maShort cross under maLong);
+
+// 確保交叉發生在 120 天內，且 K 棒數在 MinDays ~ MaxDays 之間
+if LastDeathCross >= MinDays and LastDeathCross <= MaxDays then 
+    ret = 1;  // 返回符合條件的最後一次死亡交叉 K 棒位置
+
+
+
