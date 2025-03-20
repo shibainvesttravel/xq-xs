@@ -1,0 +1,15 @@
+{@type:filter|@guid:8bfb4fca59d34a2c962b75cc95d84b4c}
+input:Length1(10,"短日");
+input:Lowerlimit(0,"下限");
+input:Upperlimit(2,"上限");
+
+settotalBar(Length1*2);
+
+var: V1(0), V2(0);
+V1 = (HIGH - LOW) / CLOSE*100 ;  { 計算當日振幅百分比 }
+V2 = average(V1, length1);  { 計算 10 日平均振幅百分比 }
+
+IF V2 < upperlimit 
+and V2> lowerlimit
+then ret=1;  { 若 10 日平均振幅 < 2%，則 RET = 1，否則為 0 }
+
