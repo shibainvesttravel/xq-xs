@@ -1,0 +1,20 @@
+{@type:filter|@guid:f294e4689d6142c7a79a9a979258baf8}
+setbarfreq("W");
+
+input: period1(50,"大於幾週平均");
+input: percent1(10,"幾%");
+input: period2(5,"大於幾週前");
+input: percent2(3,"幾%");
+input: number(800,"大戶持股低限");
+
+settotalbar(period1+10);
+
+Value1=Average(GetField("大戶持股比例","W",param:=number),period1);
+
+condition1 = GetField("大戶持股比例","W",param:=number)>=value1*(1+percent1*0.01);
+condition2 = GetField("大戶持股比例","W",param:=number)>=GetField("大戶持股比例","W",param:=number)[period2]*(1+percent2*0.01);
+
+
+if condition1 and condition2  
+ then ret=1;
+
