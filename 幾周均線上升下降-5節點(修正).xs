@@ -11,7 +11,7 @@ input:toppricepoint4(0,"4點最高節點位置");
 input:bottompricepoint4(30,"最低節點位置");
 input:toppricepoint3(0,"3點最高節點位置");
 input:bottompricepoint3(20,"最低節點位置");
-input:toppricepoint2(0,"3點最高節點位置");
+input:toppricepoint2(0,"2點最高節點位置");
 input:bottompricepoint2(10,"最低節點位置");
 input:ratio1(1.1,"高低點比值大於");
 input:ratio2(2,"高低點比值小於");
