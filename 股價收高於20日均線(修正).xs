@@ -1,0 +1,20 @@
+{@type:filter|@guid:3c55e059e8a34c328916c30bf7ce3120}
+SetBarFreq("D");
+input:Leng1(20,"幾日均線");
+input:Leng2(60,"幾日均線");
+
+variable: ma1(0), ma2(0);
+
+ma1 = average(c, Leng1);
+ma2 = average(c, Leng2);
+
+condition1 = c > ma1;
+condition2 = C < ma1 and close >ma2 and ma1>ma2;
+
+if condition1 
+or condition2
+then
+ret = 1;
+
+
+
